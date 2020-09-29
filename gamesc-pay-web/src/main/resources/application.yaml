@@ -1,0 +1,46 @@
+server:
+  port: 9103
+spring:
+  application:
+    name: gamesc-pay-web
+  servlet:
+    multipart:
+      max-file-size: 5MB
+eureka:
+  client:
+    service-url:
+      defaultZone: http://10.7.51.61:10089/eureka
+  instance:
+    prefer-ip-address: true
+    ip-address: 10.7.51.61
+    instance-id: ${eureka.instance.ip-address}.${server.port}
+    lease-renewal-interval-in-seconds: 3
+    lease-expiration-duration-in-seconds: 10
+management:
+  endpoint:
+    shutdown:
+      enabled: true #开启端点
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 0
+  eager-load:
+    enabled: true
+    clients: gamesc-pay
+logging:
+  level:
+    root: info

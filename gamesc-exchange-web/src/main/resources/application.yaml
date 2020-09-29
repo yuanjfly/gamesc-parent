@@ -1,0 +1,54 @@
+server:
+  port: 9105
+spring:
+  application:
+    name: gamesc-exchange-web
+  servlet:
+    multipart:
+      max-file-size: 5MB
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+  redis:
+    lettuce:
+      pool:
+        max-active: 16
+        max-wait: 5
+        max-idle: 5
+        min-idle: 5
+    activity:
+      host: 10.7.125.142
+      port: root
+      database: 3
+      password: 123456
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://10.7.125.237:10089/eureka/
+  instance:
+    prefer-ip-address: true
+    ip-address: 10.7.51.61
+    instance-id: ${eureka.instance.ip-address}.${server.port}
+    lease-renewal-interval-in-seconds: 3
+    lease-expiration-duration-in-seconds: 10
+management:
+  endpoint:
+    shutdown:
+      enabled: true #开启端点
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 0
+  eager-load:
+    enabled: true
+    clients: gamesc-account,gamesc-user,gamesc-adv-exchange
+
